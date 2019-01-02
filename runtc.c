@@ -26,7 +26,9 @@ static void usage(char *pname) {
 int main(int argc, char *argv[]) {
   pid_t pid;
   int status;
-  int unshare_flags = CLONE_NEWNS | CLONE_NEWPID;
+  int unshare_flags = CLONE_NEWUTS | CLONE_NEWNS | CLONE_NEWPID;
+  const char *hostname = "runtc";
+  const char *domainname = "runtc";
 
   if (-1 == unshare(unshare_flags))
     errExit("unshare");
@@ -55,6 +57,12 @@ int main(int argc, char *argv[]) {
   if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV, NULL) !=
       0)
     errExit("mount");
+
+  if (sethostname(hostname, strlen(hostname)) != 0)
+    errExit("sethostname");
+
+  if (setdomainname(domainname, strlen(domainname)) != 0)
+    errExit("setdomainname");
 
   execvp(argv[1], &argv[1]);
 }
