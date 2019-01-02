@@ -29,6 +29,13 @@ int main(int argc, char *argv[]) {
   int unshare_flags = CLONE_NEWUTS | CLONE_NEWNS | CLONE_NEWPID;
   const char *hostname = "runtc";
   const char *domainname = "runtc";
+  const char *rootpath = "./root";
+
+  if (chroot(rootpath) != 0)
+    errExit("chroot");
+
+  if (chdir("/"))
+    errExit("chdir");
 
   if (-1 == unshare(unshare_flags))
     errExit("unshare");

@@ -1,2 +1,5 @@
 runtc
 *.log
+/root/
+.dockerenv
+*.tar
