@@ -48,6 +48,10 @@ int main(int argc, char *argv[]) {
     exit(EXIT_SUCCESS);
   }
 
+  /* change the propagation type */
+  if (mount("none", "/proc", NULL, MS_PRIVATE | MS_REC, NULL) != 0)
+    errExit("unmount");
+
   if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV, NULL) !=
       0)
     errExit("mount");
