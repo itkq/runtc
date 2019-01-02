@@ -18,6 +18,11 @@
     exit(EXIT_FAILURE);                                                        \
   } while (0)
 
+static void usage(char *pname) {
+  fprintf(stderr, "Usage: %s cmd [arg...]\n", pname);
+  exit(EXIT_FAILURE);
+}
+
 int main(int argc, char *argv[]) {
   pid_t pid;
   int status;
@@ -25,6 +30,10 @@ int main(int argc, char *argv[]) {
 
   if (-1 == unshare(unshare_flags))
     errExit("unshare");
+
+  if (argc < 2) {
+    usage(argv[0]);
+  }
 
   pid = fork();
   switch (pid) {
@@ -43,5 +52,5 @@ int main(int argc, char *argv[]) {
       0)
     errExit("mount");
 
-  execlp("ps", "ps", "a", (char *)NULL);
+  execvp(argv[1], &argv[1]);
 }
