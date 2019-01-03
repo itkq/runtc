@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
   int status;
   uid_t real_euid = geteuid();
   gid_t real_egid = getegid();
-  int unshare_flags = CLONE_NEWCGROUP | CLONE_NEWUSER | CLONE_NEWUTS |
+  int unshare_flags = CLONE_NEWNET | CLONE_NEWUSER | CLONE_NEWUTS |
                       CLONE_NEWNS | CLONE_NEWPID;
   const char *hostname = "runtc";
   const char *domainname = "runtc";
