@@ -4,13 +4,13 @@ set -xe
 
 image="ubuntu:18.04"
 tarname="bionic.tar"
-rootdir="./root"
+rootdir="../root"
 
 if ! [ -f "$tarname" ]; then
   docker export "$image" > "$tarname"
 fi
 
-if ! [ -d "$rootdir" ]; then
-  mkdir "$rootdir"
-  tar xf "$tarname" -C "$rootdir"
+if [ $(whoami) = 'vagrant' ] && ! [ -d "$rootdir" ]; then
+  sudo mkdir "$rootdir"
+  sudo tar xf "$tarname" -C "$rootdir"
 fi

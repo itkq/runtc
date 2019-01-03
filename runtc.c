@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
                       CLONE_NEWNS | CLONE_NEWPID;
   const char *hostname = "runtc";
   const char *domainname = "runtc";
-  const char *rootpath = "./root";
+  const char *rootpath = "../root";
 
   if (argc < 2) {
     usage(argv[0]);
@@ -132,10 +132,6 @@ int main(int argc, char *argv[]) {
 
     exit(EXIT_SUCCESS);
   }
-
-  /* change the propagation type */
-  if (mount("none", "/proc", NULL, MS_PRIVATE | MS_REC, NULL) != 0)
-    errExit("unmount");
 
   if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV, NULL) !=
       0)
