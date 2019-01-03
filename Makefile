@@ -3,3 +3,9 @@ all: runtc.c
 
 run: all
 	sudo ./runtc bash
+
+init:
+	./export-bionic
+
+clean:
+	rm -f runtc *.tar

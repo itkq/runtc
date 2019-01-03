@@ -2,12 +2,20 @@
 
 set -xe
 
-image="ubuntu:18.04"
-tarname="bionic.tar"
+image="runtc-bionic"
+tarname="$image.tar"
 rootdir="../root"
 
-if ! [ -f "$tarname" ]; then
-  docker export "$image" > "$tarname"
+if which docker > /dev/null; then
+  if ! $(docker images --format '{{.Repository}}' | grep -q "$image"); then
+    docker build . -t "$image"
+  fi
+
+  if ! [ -f "$tarname" ]; then
+    docker run --name "$image" "$image"
+    docker export "$image" > "$tarname"
+    docker ps -a --filter "name=$image" -q | xargs docker rm
+  fi
 fi
 
 if [ $(whoami) = 'vagrant' ] && ! [ -d "$rootdir" ]; then
