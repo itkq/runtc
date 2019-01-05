@@ -1,5 +1,5 @@
 # runtc
-Tiny container runtime
+Tiny Linux container runtime
 
 ## Prerequirement
 - Docker
